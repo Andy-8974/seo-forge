@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SEO_FORGE | Premium JSON-LD Schema Suite</title>
+    <title>SEO_FORGE | Premium Utility Suite</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,17 +14,9 @@
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            50: '#f8fafc',
-                            100: '#f1f5f9',
-                            600: '#4f46e5',
-                            700: '#4338ca',
-                            900: '#0f172a',
-                        }
+                        brand: { 50: '#f8fafc', 600: '#4f46e5', 700: '#4338ca', 900: '#0f172a' }
                     },
-                    boxShadow: {
-                        'premium': '0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02)',
-                    }
+                    boxShadow: { 'premium': '0 20px 25px -5px rgba(0, 0, 0, 0.05)' }
                 }
             }
         }
@@ -35,8 +27,9 @@
         .glass-nav { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
         .code-preview::-webkit-scrollbar { width: 6px; }
         .code-preview::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
-        .input-focus { transition: all 0.2s ease; }
-        .input-focus:focus { transform: translateY(-1px); }
+        .tool-section { display: none; }
+        .tool-section.active { display: block; animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="bg-brand-50 min-h-screen">
@@ -50,131 +43,130 @@
                 <span class="text-2xl font-black text-brand-900 tracking-tighter uppercase">SEO_FORGE</span>
             </div>
             <div class="hidden md:flex items-center space-x-6">
-                <a href="#" class="text-sm font-bold text-brand-600 border-b-2 border-brand-600 pb-1">Schema Generator</a>
-                <a href="#" class="text-sm font-bold text-slate-400 hover:text-brand-600 transition">Slug Optimizer</a>
-                <a href="#" class="text-sm font-bold text-slate-400 hover:text-brand-600 transition">List Cleaner</a>
-                <button class="ml-4 bg-brand-900 text-white px-6 py-2.5 rounded-xl text-sm font-bold hover:shadow-xl hover:bg-slate-800 transition">Pro v2.0</button>
+                <button onclick="showTool('schema-tool', this)" class="nav-link text-sm font-bold text-brand-600 border-b-2 border-brand-600 pb-1">Schema Gen</button>
+                <button onclick="showTool('slug-tool', this)" class="nav-link text-sm font-bold text-slate-400 hover:text-brand-600 pb-1">Slug Opt</button>
+                <button onclick="showTool('list-tool', this)" class="nav-link text-sm font-bold text-slate-400 hover:text-brand-600 pb-1">List Cleaner</button>
             </div>
         </div>
     </nav>
 
     <main class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-12 gap-10">
         
-        <div class="lg:col-span-7 space-y-8">
-            <div class="bg-white rounded-[2rem] p-8 md:p-10 shadow-premium border border-slate-200/60">
-                <div class="mb-8">
-                    <h1 class="text-4xl font-black text-slate-900 tracking-tight mb-2">FAQ Schema Generator</h1>
-                    <p class="text-slate-500 font-medium">Create high-impact JSON-LD structured data for Google Rich Snippets.</p>
+        <div class="lg:col-span-7">
+            
+            <section id="schema-tool" class="tool-section active space-y-8">
+                <div class="bg-white rounded-[2rem] p-8 shadow-premium border border-slate-200/60">
+                    <h1 class="text-3xl font-black text-slate-900 mb-2">FAQ Schema Generator</h1>
+                    <p class="text-slate-500 mb-8">Generate JSON-LD for Google Rich Snippets.</p>
+                    <div id="faq-rows" class="space-y-4"></div>
+                    <button onclick="addFaqItem()" class="w-full mt-6 py-4 border-2 border-dashed border-slate-200 rounded-2xl text-slate-400 font-bold hover:border-brand-600 hover:text-brand-600 transition">+ Add Question</button>
                 </div>
+            </section>
 
-                <div id="faq-container" class="space-y-6">
+            <section id="slug-tool" class="tool-section space-y-8">
+                <div class="bg-white rounded-[2rem] p-8 shadow-premium border border-slate-200/60">
+                    <h1 class="text-3xl font-black text-slate-900 mb-2">SEO Slug Optimizer</h1>
+                    <p class="text-slate-500 mb-8">Create clean, stop-word-free URL structures.</p>
+                    <input type="text" id="slugInput" oninput="runSlug()" class="w-full p-4 bg-slate-50 border rounded-xl outline-none focus:border-brand-600" placeholder="Enter Page Title...">
+                </div>
+            </section>
+
+            <section id="list-tool" class="tool-section space-y-8">
+                <div class="bg-white rounded-[2rem] p-8 shadow-premium border border-slate-200/60">
+                    <h1 class="text-3xl font-black text-slate-900 mb-2">Pro List Cleaner</h1>
+                    <p class="text-slate-500 mb-8">De-duplicate and alphabetize your data.</p>
+                    <textarea id="listInput" oninput="runList()" class="w-full h-64 p-4 bg-slate-50 border rounded-xl outline-none focus:border-brand-600 font-mono text-sm" placeholder="Paste list items here..."></textarea>
+                    <div class="flex gap-4 mt-4">
+                        <label class="flex items-center gap-2 text-sm font-bold text-slate-600"><input type="checkbox" id="cleanDupe" checked onchange="runList()"> Remove Duplicates</label>
+                        <label class="flex items-center gap-2 text-sm font-bold text-slate-600"><input type="checkbox" id="cleanSort" checked onchange="runList()"> Sort A-Z</label>
                     </div>
-
-                <div class="mt-8 pt-6 border-t border-slate-100">
-                    <button onclick="addItem()" class="w-full py-4 border-2 border-dashed border-slate-200 rounded-2xl text-slate-400 font-bold hover:border-brand-600 hover:text-brand-600 hover:bg-brand-50 transition-all flex items-center justify-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                        Add Another Question
-                    </button>
                 </div>
-            </div>
+            </section>
 
-            <div class="bg-white rounded-[2rem] p-8 border border-slate-200/60">
-                <h3 class="text-xl font-bold text-slate-900 mb-4 text-center italic uppercase tracking-widest text-brand-600">Architect's Guide</h3>
-                <div class="grid md:grid-cols-2 gap-6 text-sm text-slate-500 leading-relaxed">
-                    <p><strong>Step 1:</strong> Fill in the questions and answers your users frequently ask. Keep them concise for the best display in SERPs.</p>
-                    <p><strong>Step 2:</strong> Copy the generated code on the right and paste it into the <code>&lt;head&gt;</code> of your HTML or via a Header/Footer plugin.</p>
-                </div>
-            </div>
         </div>
 
         <aside class="lg:col-span-5 space-y-8">
-            <div class="bg-brand-900 rounded-[2.5rem] p-8 shadow-2xl sticky top-28 overflow-hidden">
-                <div class="absolute -top-10 -right-10 w-40 h-40 bg-brand-600 opacity-20 blur-[80px]"></div>
-                
-                <div class="relative z-10">
-                    <div class="flex justify-between items-center mb-6">
-                        <div class="flex flex-col">
-                            <span class="text-brand-600 font-black text-[10px] uppercase tracking-[0.2em]">Validated Output</span>
-                            <span class="text-white font-bold text-lg">JSON-LD Code</span>
-                        </div>
-                        <button onclick="copyToClipboard()" class="bg-brand-600 text-white px-5 py-2 rounded-xl text-xs font-bold hover:bg-brand-700 transition active:scale-95 shadow-lg shadow-brand-600/40">Copy Code</button>
-                    </div>
-
-                    <textarea id="schemaOutput" readonly 
-                        class="code-preview w-full h-[400px] bg-slate-800/50 text-emerald-400 font-mono text-[11px] p-6 rounded-2xl border border-slate-700/50 focus:outline-none resize-none leading-relaxed"
-                        placeholder="{ ... }"></textarea>
-                    
-                    <div class="mt-6 flex justify-between items-center text-[10px] font-bold text-slate-500 uppercase tracking-widest px-2">
-                        <span>Status: Live Preview</span>
-                        <button onclick="downloadJson()" class="hover:text-white transition cursor-pointer">Download .json</button>
-                    </div>
+            <div class="bg-brand-900 rounded-[2.5rem] p-8 shadow-2xl sticky top-28">
+                <div class="flex justify-between items-center mb-6">
+                    <span class="text-brand-600 font-black text-[10px] uppercase tracking-widest">Live Output</span>
+                    <button onclick="copyOutput()" class="bg-brand-600 text-white px-4 py-1.5 rounded-lg text-xs font-bold hover:bg-brand-500 transition">Copy</button>
                 </div>
+                <textarea id="masterOutput" readonly class="code-preview w-full h-[350px] bg-slate-800/50 text-emerald-400 font-mono text-[11px] p-6 rounded-2xl border border-slate-700/50 outline-none resize-none"></textarea>
             </div>
-
+            
             <div class="bg-white p-6 rounded-[2rem] border border-slate-200 text-center shadow-premium">
-                <span class="text-[10px] font-black text-slate-300 uppercase tracking-[0.3em] block mb-4">Advertisement</span>
-                <div class="aspect-[4/3] bg-slate-50 border-2 border-dashed border-slate-100 rounded-2xl flex items-center justify-center text-slate-300 italic text-sm">
-                    Premium Ad Inventory Slot
-                </div>
+                <span class="text-[10px] font-black text-slate-300 uppercase tracking-widest block mb-4">Advertisement</span>
+                <div class="aspect-[4/3] bg-slate-50 border border-dashed rounded-2xl flex items-center justify-center text-slate-300 italic">AdSense Unit</div>
             </div>
         </aside>
     </main>
 
     <script>
-        // State Management
-        let faqItems = [
-            { q: "What is the best Schema for SEO?", a: "JSON-LD is the recommended format by Google for all structured data implementations." },
-            { q: "Does this tool store my data?", a: "No. This is a client-side tool. Your data never leaves your browser." }
-        ];
+        // TAB SWITCHER
+        function showTool(toolId, btn) {
+            document.querySelectorAll('.tool-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(toolId).classList.add('active');
+            document.querySelectorAll('.nav-link').forEach(l => {
+                l.classList.remove('text-brand-600', 'border-b-2', 'border-brand-600');
+                l.classList.add('text-slate-400');
+            });
+            btn.classList.add('text-brand-600', 'border-b-2', 'border-brand-600');
+            btn.classList.remove('text-slate-400');
+            updateOutputs();
+        }
 
-        // Core Engine
-        function render() {
-            const container = document.getElementById('faq-container');
-            container.innerHTML = faqItems.map((item, index) => `
-                <div class="group relative space-y-3 p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-brand-100 hover:bg-white transition-all duration-300 shadow-sm hover:shadow-md">
-                    <div class="flex justify-between items-center">
-                        <span class="text-[10px] font-black text-brand-600 uppercase tracking-widest">Question ${index + 1}</span>
-                        ${index > 0 ? `<button onclick="removeItem(${index})" class="text-slate-300 hover:text-red-500 transition"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>` : ''}
-                    </div>
-                    <input type="text" placeholder="Enter Question" class="input-focus w-full px-4 py-3 border border-slate-200 rounded-xl outline-none focus:ring-4 focus:ring-brand-600/5 focus:border-brand-600 font-semibold text-slate-800" oninput="update(${index}, 'q', this.value)" value="${item.q}">
-                    <textarea placeholder="Enter Answer" rows="3" class="input-focus w-full px-4 py-3 border border-slate-200 rounded-xl outline-none focus:ring-4 focus:ring-brand-600/5 focus:border-brand-600 text-slate-600 text-sm" oninput="update(${index}, 'a', this.value)">${item.a}</textarea>
+        // TOOL 1: SCHEMA LOGIC
+        let faqs = [{ q: "What is SEO Forge?", a: "A premium suite of client-side SEO tools." }];
+        function renderFaqs() {
+            const container = document.getElementById('faq-rows');
+            container.innerHTML = faqs.map((f, i) => `
+                <div class="p-4 bg-slate-50 rounded-xl border space-y-2">
+                    <input type="text" oninput="updateFaq(${i},'q',this.value)" value="${f.q}" class="w-full p-2 rounded border text-sm font-bold" placeholder="Question">
+                    <textarea oninput="updateFaq(${i},'a',this.value)" class="w-full p-2 rounded border text-sm" placeholder="Answer">${f.a}</textarea>
                 </div>
             `).join('');
-            updateOutput();
+            updateOutputs();
+        }
+        function updateFaq(i, k, v) { faqs[i][k] = v; updateOutputs(); }
+        function addFaqItem() { faqs.push({ q: "", a: "" }); renderFaqs(); }
+
+        // TOOL 2: SLUG LOGIC
+        function runSlug() {
+            const input = document.getElementById('slugInput').value;
+            const stopWords = /\b(a|an|the|and|or|but|is|if|then|else|at|by|for|with|in|on|to)\b/gi;
+            const slug = input.toLowerCase().replace(stopWords, '').replace(/[^\w\s-]/g, '').trim().replace(/\s+/g, '-').replace(/-+/g, '-');
+            document.getElementById('masterOutput').value = slug;
         }
 
-        function update(index, key, val) {
-            faqItems[index][key] = val;
-            updateOutput();
+        // TOOL 3: LIST LOGIC
+        function runList() {
+            const input = document.getElementById('listInput').value;
+            let list = input.split('\n').map(i => i.trim()).filter(i => i !== "");
+            if (document.getElementById('cleanDupe').checked) list = [...new Set(list)];
+            if (document.getElementById('cleanSort').checked) list.sort();
+            document.getElementById('masterOutput').value = list.join('\n');
         }
 
-        function addItem() {
-            faqItems.push({ q: "", a: "" });
-            render();
+        // OUTPUT DISPATCHER
+        function updateOutputs() {
+            const activeTool = document.querySelector('.tool-section.active').id;
+            if (activeTool === 'schema-tool') {
+                const schema = { "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": faqs.filter(f => f.q && f.a).map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } })) };
+                document.getElementById('masterOutput').value = JSON.stringify(schema, null, 2);
+            } else if (activeTool === 'slug-tool') {
+                runSlug();
+            } else if (activeTool === 'list-tool') {
+                runList();
+            }
         }
 
-        function removeItem(index) {
-            faqItems.splice(index, 1);
-            render();
+        async function copyOutput() {
+            await navigator.clipboard.writeText(document.getElementById('masterOutput').value);
+            alert('Copied!');
         }
 
-        function updateOutput() {
-            const schema = {
-                "@context": "https://schema.org",
-                "@type": "FAQPage",
-                "mainEntity": faqItems.filter(i => i.q && i.a).map(i => ({
-                    "@type": "Question",
-                    "name": i.q,
-                    "acceptedAnswer": { "@type": "Answer", "text": i.a }
-                }))
-            };
-            document.getElementById('schemaOutput').value = JSON.stringify(schema, null, 2);
-        }
-
-        // Utilities
-        async function copyToClipboard() {
-            const text = document.getElementById('schemaOutput').value;
-            await navigator.clipboard.writeText(text);
-            const btn = event.target;
-            const originalText = btn.innerText;
-            btn
+        // Start
+        renderFaqs();
+    </script>
+</body>
+</html>
