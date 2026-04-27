@@ -108,6 +108,35 @@
             <div class="p-6 bg-white rounded-3xl border border-dashed border-slate-200 text-center text-slate-300 text-xs italic">AdSense Display Unit</div>
         </aside>
     </main>
+    <footer class="max-w-7xl mx-auto px-6 py-10 border-t border-slate-200 mt-12">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-bold text-slate-400 uppercase tracking-widest">
+        <div>© 2026 SEO_FORGE - Privacy First SEO Tools</div>
+        <div class="flex gap-6">
+            <button onclick="showTool('privacy-policy', this)" class="nav-link hover:text-brand-600">Privacy Policy</button>
+            <a href="mailto:andrewan@hotmail.com" class="hover:text-brand-600">Contact Support</a>
+        </div>
+    </div>
+</footer>
+
+<section id="privacy-policy" class="tool-section">
+    <div class="max-w-3xl mx-auto bg-white rounded-3xl p-10 shadow-premium border border-slate-200">
+        <h2 class="text-3xl font-black text-slate-900 mb-6">Privacy Policy</h2>
+        <div class="prose prose-slate text-sm text-slate-600 space-y-4">
+            <p><strong>Last Updated: April 2026</strong></p>
+            <p>At SEO_FORGE, we take your privacy seriously. This policy outlines how we handle data on our static utility site.</p>
+            
+            <h3 class="font-bold text-slate-900 uppercase tracking-tight">1. No Server-Side Storage</h3>
+            <p>SEO_FORGE is a <strong>client-side application</strong>. This means all processing—whether you are generating Schema, optimizing slugs, or cleaning lists—happens entirely within your own web browser. We do not transmit, save, or store your input data on our servers.</p>
+            
+            <h3 class="font-bold text-slate-900 uppercase tracking-tight">2. Advertising & Cookies</h3>
+            <p>We use third-party advertising companies (such as Google AdSense) to serve ads when you visit our website. These companies may use cookies to provide advertisements about goods and services of interest to you. You can opt out of personalized advertising by visiting your browser's ad settings.</p>
+            
+            <h3 class="font-bold text-slate-900 uppercase tracking-tight">3. Log Files</h3>
+            <p>Like most websites, we use standard analytics (like Google Analytics) to see how many people use our tools. This includes IP addresses, browser type, and time spent on page. This data is not linked to any personally identifiable information.</p>
+        </div>
+        <button onclick="showTool('schema-faq', document.querySelector('.nav-link'))" class="mt-8 bg-brand-900 text-white px-6 py-3 rounded-xl font-bold text-sm">Back to Tools</button>
+    </div>
+</section>
 
     <script>
         let faqs = [{q:"What is SEO Forge?", a:"A high-speed SEO toolkit."}];
