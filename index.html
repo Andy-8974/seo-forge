@@ -3,7 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SEO_FORGE | Professional SEO & Marketing Tool Suite</title>
+    <title>SEO_FORGE | Professional Marketing & SEO Tool Suite</title>
+    <meta name="description" content="Free browser-based SEO tools. Generate Schema, QR Codes, Meta Tags, and UTM links instantly.">
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BWDCJZKLCY"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-BWDCJZKLCY');
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <script>
@@ -21,124 +33,168 @@
         .tool-panel.active { display: block; animation: slideUp 0.3s ease-out; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .nav-active { color: #f27405; border-bottom: 2px solid #f27405; }
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
     </style>
 </head>
-<body class="bg-[#fcfdfe] text-slate-900">
+<body class="bg-[#fcfdfe] text-slate-900 min-h-screen flex flex-col">
 
     <nav class="flex items-center justify-between px-10 py-6 bg-white border-b sticky top-0 z-50">
         <div class="flex items-center gap-2">
-            <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center text-white font-bold italic shadow-lg">SF</div>
-            <span class="text-xl font-extrabold tracking-tighter">SEO_FORGE</span>
+            <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg">SF</div>
+            <span class="text-xl font-extrabold tracking-tighter uppercase">SEO_FORGE</span>
         </div>
-        <div class="hidden md:flex gap-8 text-xs font-bold uppercase tracking-widest text-slate-400">
+        <div class="hidden md:flex gap-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
             <button onclick="activate('schema', this)" class="nav-item nav-active pb-1">Schema</button>
+            <button onclick="activate('qr', this)" class="nav-item pb-1">QR Gen</button>
             <button onclick="activate('roi', this)" class="nav-item pb-1">ROI Calc</button>
             <button onclick="activate('meta', this)" class="nav-item pb-1">Meta Tags</button>
             <button onclick="activate('utm', this)" class="nav-item pb-1">UTM Builder</button>
         </div>
-        <button class="bg-brand-600 text-white px-6 py-2 rounded-xl text-sm font-bold hover:bg-brand-700 transition shadow-lg shadow-orange-100">Pro Access</button>
+        <button class="bg-brand-900 text-white px-6 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-xl">Contact</button>
     </nav>
 
-    <header class="text-center py-20 bg-gradient-to-b from-blue-50/40 to-white px-4">
-        <h1 class="text-5xl font-extrabold mb-4 tracking-tight">Free <span class="text-brand-600">SEO Automation</span> Tools</h1>
-        <p class="max-w-2xl mx-auto text-slate-500 text-lg mb-10">Instantly generate code and audits in your browser. Privacy-focused, zero data-tracking, professional results.</p>
+    <header class="text-center py-16 bg-gradient-to-b from-slate-50 to-white px-4">
+        <h1 class="text-5xl font-extrabold mb-4 tracking-tight text-slate-900">Free <span class="text-brand-600">SEO & Marketing</span> Tools</h1>
+        <p class="max-w-2xl mx-auto text-slate-500 text-lg mb-8 leading-relaxed">Instantly generate high-performance code and audits in your browser. Privacy-focused, zero data-tracking, professional results.</p>
     </header>
 
-    <main class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 pb-24">
+    <main class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 pb-24 flex-grow">
         
-        <div class="bg-white rounded-3xl p-8 shadow-xl border border-slate-100">
+        <div class="bg-white rounded-[2.5rem] p-10 shadow-xl border border-slate-100 h-fit">
             
             <div id="schema" class="tool-panel active space-y-4">
-                <h2 class="text-2xl font-black mb-4">Organization Schema</h2>
-                <input type="text" id="s-name" oninput="run()" placeholder="Business Name" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
-                <input type="text" id="s-url" oninput="run()" placeholder="Website URL" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
-                <input type="text" id="s-logo" oninput="run()" placeholder="Logo Image URL" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                <h2 class="text-2xl font-black mb-2 text-slate-900 tracking-tight">Organization Schema</h2>
+                <p class="text-xs text-slate-400 mb-6 uppercase tracking-widest font-bold">Identity markup for your brand</p>
+                <input type="text" id="s-name" oninput="run()" placeholder="Business Name" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-xl outline-none focus:border-brand-600 transition">
+                <input type="text" id="s-url" oninput="run()" placeholder="Website URL" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-xl outline-none focus:border-brand-600 transition">
+                <input type="text" id="s-logo" oninput="run()" placeholder="Logo URL (e.g. .png)" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-xl outline-none focus:border-brand-600 transition">
+            </div>
+
+            <div id="qr" class="tool-panel space-y-4">
+                <h2 class="text-2xl font-black mb-2 text-rose-600 tracking-tight">QR Code Generator</h2>
+                <p class="text-xs text-slate-400 mb-6 uppercase tracking-widest font-bold">Fast browser-side encoding</p>
+                <input type="text" id="q-text" oninput="run()" placeholder="Enter URL or Text" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-xl outline-none focus:border-rose-600 transition">
             </div>
 
             <div id="roi" class="tool-panel space-y-4">
-                <h2 class="text-2xl font-black mb-4 text-blue-600 font-bold">Marketing ROI Calculator</h2>
-                <label class="text-[10px] font-bold text-slate-400 uppercase">Total Ad Spend ($)</label>
-                <input type="number" id="r-spend" oninput="run()" value="1000" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
-                <label class="text-[10px] font-bold text-slate-400 uppercase">Avg. Sale Price ($)</label>
-                <input type="number" id="r-sale" oninput="run()" value="150" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
-                <label class="text-[10px] font-bold text-slate-400 uppercase">Number of Conversions</label>
-                <input type="number" id="r-conv" oninput="run()" value="20" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                <h2 class="text-2xl font-black mb-2 text-blue-600 tracking-tight">Ad ROI Calculator</h2>
+                <p class="text-xs text-slate-400 mb-6 uppercase tracking-widest font-bold">Analyze marketing performance</p>
+                <div class="space-y-4">
+                    <label class="text-[10px] font-black text-slate-400 uppercase">Monthly Ad Spend ($)</label>
+                    <input type="number" id="r-spend" oninput="run()" value="1000" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                    <label class="text-[10px] font-black text-slate-400 uppercase">Average Sale Price ($)</label>
+                    <input type="number" id="r-sale" oninput="run()" value="150" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                    <label class="text-[10px] font-black text-slate-400 uppercase">Total Monthly Conversions</label>
+                    <input type="number" id="r-conv" oninput="run()" value="20" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                </div>
             </div>
 
             <div id="meta" class="tool-panel space-y-4">
-                <h2 class="text-2xl font-black mb-4 text-emerald-600 font-bold">Meta Tag Generator</h2>
-                <input type="text" id="m-title" oninput="run()" placeholder="Page Title" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
-                <textarea id="m-desc" oninput="run()" placeholder="Meta Description" class="w-full h-32 p-4 bg-slate-50 border rounded-xl outline-none"></textarea>
+                <h2 class="text-2xl font-black mb-2 text-emerald-600 tracking-tight">Meta Tag Generator</h2>
+                <p class="text-xs text-slate-400 mb-6 uppercase tracking-widest font-bold">HTML Search Snippets</p>
+                <input type="text" id="m-title" oninput="run()" placeholder="Page Title (Max 60 chars)" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-xl outline-none focus:border-emerald-600 transition">
+                <textarea id="m-desc" oninput="run()" placeholder="Meta Description (Max 160 chars)" class="w-full h-32 p-4 bg-slate-50 border border-slate-100 rounded-xl outline-none focus:border-emerald-600 transition"></textarea>
             </div>
 
             <div id="utm" class="tool-panel space-y-4">
-                <h2 class="text-2xl font-black mb-4 text-purple-600 font-bold">UTM Link Builder</h2>
-                <input type="text" id="u-url" oninput="run()" placeholder="Target URL" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                <h2 class="text-2xl font-black mb-2 text-purple-600 tracking-tight">UTM Link Builder</h2>
+                <p class="text-xs text-slate-400 mb-6 uppercase tracking-widest font-bold">Campaign Tracking</p>
+                <input type="text" id="u-url" oninput="run()" placeholder="Destination URL" class="w-full p-4 bg-slate-50 border rounded-xl outline-none mb-4">
                 <div class="grid grid-cols-2 gap-4">
-                    <input type="text" id="u-src" oninput="run()" placeholder="Source (e.g. google)" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
-                    <input type="text" id="u-med" oninput="run()" placeholder="Medium (e.g. email)" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                    <input type="text" id="u-src" oninput="run()" placeholder="Source (e.g. facebook)" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                    <input type="text" id="u-med" oninput="run()" placeholder="Medium (e.g. cpc)" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
                 </div>
             </div>
 
         </div>
 
-        <div class="bg-slate-900 rounded-3xl p-8 shadow-2xl relative overflow-hidden flex flex-col h-[500px]">
-            <div class="absolute top-0 right-0 w-32 h-32 bg-brand-600 opacity-10 blur-3xl"></div>
-            <div class="flex justify-between items-center mb-6 relative z-10">
-                <span id="label" class="text-brand-600 font-black text-[10px] uppercase tracking-widest italic">JSON-LD Output</span>
-                <button onclick="copyOut()" class="bg-brand-600 text-white px-5 py-2 rounded-xl text-xs font-bold hover:bg-brand-700 transition">Copy Result</button>
+        <div class="bg-slate-900 rounded-[2.5rem] p-10 shadow-2xl relative overflow-hidden flex flex-col min-h-[500px]">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-brand-600 opacity-10 blur-[100px]"></div>
+            <div class="flex justify-between items-center mb-8 relative z-10">
+                <div class="flex flex-col">
+                    <span id="label" class="text-brand-600 font-black text-[10px] uppercase tracking-[0.3em] mb-1 italic">JSON-LD Output</span>
+                    <span class="text-white/40 text-[10px] font-bold tracking-tight">Verified Browser Processing</span>
+                </div>
+                <button onclick="copyOut()" class="bg-brand-600 text-white px-6 py-2 rounded-xl text-xs font-bold hover:bg-brand-700 transition active:scale-95 shadow-lg shadow-orange-900/40">Copy Result</button>
             </div>
-            <textarea id="out" readonly class="flex-1 bg-transparent text-emerald-400 font-mono text-xs p-2 outline-none resize-none leading-relaxed custom-scrollbar"></textarea>
+            
+            <div id="output-wrapper" class="flex-1 flex items-center justify-center relative z-10">
+                <textarea id="out" readonly class="w-full h-full bg-transparent text-emerald-400 font-mono text-xs p-2 outline-none resize-none leading-relaxed custom-scrollbar"></textarea>
+                <div id="qr-result" class="hidden bg-white p-6 rounded-2xl shadow-inner flex flex-col items-center">
+                    <div id="qr-code"></div>
+                    <span class="mt-4 text-[10px] font-black text-slate-400 uppercase tracking-widest italic">Right click to save</span>
+                </div>
+            </div>
         </div>
     </main>
 
-    <section class="max-w-7xl mx-auto px-6 py-24 border-t border-slate-100">
+    <section class="max-w-7xl mx-auto px-6 py-20 border-t border-slate-100">
         <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold text-slate-900">Explore Our Free Utilities</h2>
-            <p class="text-slate-400">Lightweight browser tools for professional marketers.</p>
+            <h2 class="text-3xl font-bold text-slate-900">Suite of High-Traffic Utilities</h2>
+            <p class="text-slate-400 mt-2">More professional tools coming soon.</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div class="p-8 bg-white border border-slate-100 rounded-2xl text-center hover:shadow-2xl transition cursor-pointer" onclick="activate('roi')">
-                <div class="text-blue-500 font-bold mb-2">ROI</div>
-                <div class="font-extrabold text-slate-900">Calculators</div>
+            <div onclick="activate('qr')" class="p-8 bg-white border border-slate-100 rounded-3xl text-center hover:shadow-2xl transition cursor-pointer group">
+                <div class="text-rose-500 font-bold mb-2 group-hover:scale-110 transition">QR</div>
+                <div class="font-extrabold text-slate-900 tracking-tight">QR Generator</div>
             </div>
-            <div class="p-8 bg-white border border-slate-100 rounded-2xl text-center hover:shadow-2xl transition cursor-pointer" onclick="activate('utm')">
-                <div class="text-purple-500 font-bold mb-2">UTM</div>
-                <div class="font-extrabold text-slate-900">Link Builders</div>
+            <div onclick="activate('roi')" class="p-8 bg-white border border-slate-100 rounded-3xl text-center hover:shadow-2xl transition cursor-pointer group">
+                <div class="text-blue-500 font-bold mb-2 group-hover:scale-110 transition">ROI</div>
+                <div class="font-extrabold text-slate-900 tracking-tight">ROI Calculator</div>
             </div>
-            <div class="p-8 bg-white border border-slate-100 rounded-2xl text-center shadow-sm opacity-50 grayscale">
-                <div class="text-slate-400 font-bold mb-2 italic">QR Code</div>
-                <div class="font-extrabold text-slate-400 uppercase text-[10px]">Coming Soon</div>
+            <div class="p-8 bg-white border border-slate-100 rounded-3xl text-center opacity-40 grayscale select-none">
+                <div class="text-slate-400 font-bold mb-2 italic">Robots</div>
+                <div class="font-extrabold text-slate-300 text-[10px] uppercase">Coming Soon</div>
             </div>
-            <div class="p-8 bg-white border border-slate-100 rounded-2xl text-center shadow-sm opacity-50 grayscale">
-                <div class="text-slate-400 font-bold mb-2 italic">Robots.txt</div>
-                <div class="font-extrabold text-slate-400 uppercase text-[10px]">Coming Soon</div>
+            <div class="p-8 bg-white border border-slate-100 rounded-3xl text-center opacity-40 grayscale select-none">
+                <div class="text-slate-400 font-bold mb-2 italic">Sitemap</div>
+                <div class="font-extrabold text-slate-300 text-[10px] uppercase">Coming Soon</div>
             </div>
         </div>
     </section>
 
     <footer class="bg-slate-900 text-white pt-24 pb-12 px-10">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 border-b border-slate-800 pb-20">
-            <div><h4 class="text-2xl font-black mb-6 italic">SEO_FORGE</h4><p class="text-slate-500 text-sm">Professional browser-side tools for the privacy-first web.</p></div>
-            <div><h5 class="font-bold mb-6">Tools</h5><ul class="text-slate-500 text-sm space-y-3"><li>Schema Gen</li><li>ROI Calc</li><li>Meta Gen</li></ul></div>
-            <div><h5 class="font-bold mb-6">Company</h5><ul class="text-slate-500 text-sm space-y-3"><li>Privacy Policy</li><li>About</li><li>Contact</li></ul></div>
-            <div><h5 class="font-bold mb-6">Ad Placement</h5><div class="bg-slate-800 h-32 rounded-xl flex items-center justify-center italic text-xs text-slate-600">Premium Ad Slot</div></div>
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 border-b border-slate-800 pb-20 mb-10">
+            <div><h4 class="text-2xl font-black mb-6 italic tracking-tighter">SEO_FORGE</h4><p class="text-slate-500 text-sm leading-relaxed">Built for professional marketers. Lightweight, open-source, and 100% private.</p></div>
+            <div><h5 class="text-xs font-black uppercase text-slate-400 mb-6 tracking-widest">Tools</h5><ul class="text-slate-500 text-sm space-y-3"><li>Schema Gen</li><li>ROI Calc</li><li>Meta Gen</li><li>QR Builder</li></ul></div>
+            <div><h5 class="text-xs font-black uppercase text-slate-400 mb-6 tracking-widest">Legal</h5><ul class="text-slate-500 text-sm space-y-3"><li><button onclick="activate('privacy')">Privacy Policy</button></li><li>Contact</li></ul></div>
+            <div><h5 class="text-xs font-black uppercase text-slate-400 mb-6 tracking-widest">Ad Slot</h5><div class="bg-slate-800 h-32 rounded-2xl flex items-center justify-center italic text-[10px] text-slate-600 px-10 text-center uppercase tracking-widest">Premium Ad Placement</div></div>
         </div>
-        <p class="text-center pt-8 text-[10px] text-slate-600 uppercase tracking-widest font-black">© 2026 SEO_FORGE - NO DATA STORED ON SERVER</p>
+        <p class="text-center text-[10px] text-slate-700 uppercase tracking-[0.3em] font-black">© 2026 SEO_FORGE - A Static Goldmine Production</p>
     </footer>
 
     <script>
+        let qrcodeInstance = null;
+
         function activate(id, btn) {
             document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('nav-active'));
-            if(btn) btn.classList.add('nav-active');
+            if(btn && btn.classList.contains('nav-item')) btn.classList.add('nav-active');
             
             const label = document.getElementById('label');
-            if(id === 'roi') label.innerText = "Calculated ROI Report";
-            else if(id === 'meta') label.innerText = "HTML Meta Snippet";
-            else if(id === 'utm') label.innerText = "Final UTM Link";
-            else label.innerText = "JSON-LD Output";
+            const outText = document.getElementById('out');
+            const outQR = document.getElementById('qr-result');
+
+            if(id === 'roi') label.innerText = "ROI Audit Report";
+            else if(id === 'meta') label.innerText = "HTML Meta Tag Snippet";
+            else if(id === 'utm') label.innerText = "Optimized UTM Link";
+            else if(id === 'qr') label.innerText = "Generated QR Code";
+            else label.innerText = "JSON-LD Data Snippet";
+
+            if(id === 'qr') {
+                outText.classList.add('hidden');
+                outQR.classList.remove('hidden');
+            } else {
+                outText.classList.remove('hidden');
+                outQR.classList.add('hidden');
+            }
+
+            // GA4 tracking
+            if (typeof gtag === 'function') {
+                gtag('event', 'tool_view', { 'tool_name': id });
+            }
             run();
         }
 
@@ -150,13 +206,27 @@
                 const json = {"@context":"https://schema.org","@type":"Organization","name":document.getElementById('s-name').value,"url":document.getElementById('s-url').value,"logo":document.getElementById('s-logo').value};
                 out.value = JSON.stringify(json, null, 4);
             } 
+            else if(active === 'qr') {
+                const qText = document.getElementById('q-text').value || "https://andy-8974.github.io/seo-forge/";
+                const qrContainer = document.getElementById('qr-code');
+                qrContainer.innerHTML = "";
+                new QRCode(qrContainer, {
+                    text: qText,
+                    width: 200,
+                    height: 200,
+                    colorDark : "#0f172a",
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.H
+                });
+            }
             else if(active === 'roi') {
-                const spend = parseFloat(document.getElementById('r-spend').value);
-                const sale = parseFloat(document.getElementById('r-sale').value);
-                const conv = parseFloat(document.getElementById('r-conv').value);
+                const spend = parseFloat(document.getElementById('r-spend').value) || 0;
+                const sale = parseFloat(document.getElementById('r-sale').value) || 0;
+                const conv = parseFloat(document.getElementById('r-conv').value) || 0;
                 const rev = sale * conv;
-                const roi = ((rev - spend) / spend) * 100;
-                out.value = `ROI AUDIT:\n\nTotal Spend: $${spend}\nTotal Revenue: $${rev}\nNet Profit: $${rev - spend}\n\nROI: ${roi.toFixed(2)}%`;
+                const profit = rev - spend;
+                const roi = spend > 0 ? (profit / spend) * 100 : 0;
+                out.value = `MARKETING ROI AUDIT\n--------------------\nTotal Spend: $${spend.toFixed(2)}\nTotal Revenue: $${rev.toFixed(2)}\nNet Profit: $${profit.toFixed(2)}\n\nROI Percentage: ${roi.toFixed(2)}%`;
             }
             else if(active === 'meta') {
                 const title = document.getElementById('m-title').value;
@@ -167,13 +237,18 @@
                 const url = document.getElementById('u-url').value;
                 const src = document.getElementById('u-src').value;
                 const med = document.getElementById('u-med').value;
-                out.value = `${url}?utm_source=${src}&utm_medium=${med}&utm_campaign=seo_forge`;
+                out.value = `${url}${url.includes('?') ? '&' : '?'}utm_source=${encodeURIComponent(src)}&utm_medium=${encodeURIComponent(med)}&utm_campaign=seo_forge`;
             }
         }
 
         async function copyOut() {
-            await navigator.clipboard.writeText(document.getElementById('out').value);
-            alert('Copied to Clipboard!');
+            const active = document.querySelector('.tool-panel.active').id;
+            if(active === 'qr') {
+                alert('Right-click the QR code to save as image!');
+            } else {
+                await navigator.clipboard.writeText(document.getElementById('out').value);
+                alert('Copied to Clipboard!');
+            }
         }
         run();
     </script>
