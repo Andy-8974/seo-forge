@@ -3,12 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SEO_FORGE | Advanced Schema & Text Suite</title>
+    <title>SEO_FORGE | Premium Utility Suite</title>
     <meta name="description" content="Free, privacy-focused SEO tool suite. Generate JSON-LD Schema, optimize URL slugs, and clean text lists instantly in your browser.">
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BWDCJZKLCY"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-BWDCJZKLCY');
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = {
             theme: {
@@ -19,24 +29,18 @@
             }
         }
     </script>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BWDCJZKLCY"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-BWDCJZKLCY');
-</script>
     <style>
         body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
         .glass-nav { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
+        .code-preview::-webkit-scrollbar { width: 6px; }
+        .code-preview::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
         .tool-section { display: none; }
         .tool-section.active { display: block; animation: fadeIn 0.2s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="bg-brand-50 min-h-screen pb-20">
+<body class="bg-brand-50 min-h-screen flex flex-col">
 
     <nav class="glass-nav sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
@@ -48,6 +52,7 @@
                 <button onclick="showTool('schema-faq', this)" class="nav-link text-brand-600 border-b-2 border-brand-600 pb-1">FAQ</button>
                 <button onclick="showTool('schema-product', this)" class="nav-link hover:text-brand-600 transition">Product</button>
                 <button onclick="showTool('schema-howto', this)" class="nav-link hover:text-brand-600 transition">How-To</button>
+                <button onclick="showTool('schema-local', this)" class="nav-link hover:text-brand-600 transition">Local Biz</button>
                 <div class="w-px h-4 bg-slate-200"></div>
                 <button onclick="showTool('slug-opt', this)" class="nav-link hover:text-brand-600 transition">Slug</button>
                 <button onclick="showTool('list-clean', this)" class="nav-link hover:text-brand-600 transition">List</button>
@@ -55,147 +60,199 @@
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-12 gap-10">
+    <main class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-12 gap-10 flex-grow">
         
         <div class="lg:col-span-7">
             
-            <section id="schema-faq" class="tool-section active">
-                <div class="bg-white rounded-3xl p-8 shadow-premium border border-slate-200/60">
-                    <h1 class="text-2xl font-black mb-6">FAQ Schema Generator</h1>
+            <section id="schema-faq" class="tool-section active space-y-8">
+                <div class="bg-white rounded-[2rem] p-8 shadow-premium border border-slate-200/60">
+                    <h1 class="text-3xl font-black text-slate-900 mb-2">FAQ Schema Generator</h1>
+                    <p class="text-slate-500 mb-8">Generate JSON-LD for Google Rich Snippets.</p>
                     <div id="faq-rows" class="space-y-4"></div>
-                    <button onclick="addItem('faq')" class="w-full mt-4 py-3 border-2 border-dashed border-slate-200 rounded-xl text-slate-400 font-bold hover:text-brand-600 transition">+ Add Item</button>
+                    <button onclick="addItem('faq')" class="w-full mt-6 py-4 border-2 border-dashed border-slate-200 rounded-2xl text-slate-400 font-bold hover:border-brand-600 hover:text-brand-600 transition">+ Add Item</button>
                 </div>
             </section>
 
-            <section id="schema-product" class="tool-section">
-                <div class="bg-white rounded-3xl p-8 shadow-premium border border-slate-200/60 space-y-4">
-                    <h1 class="text-2xl font-black mb-6 text-emerald-600">Product Schema Generator</h1>
-                    <input type="text" id="prodName" oninput="runProd()" placeholder="Product Name" class="w-full p-3 bg-slate-50 border rounded-xl outline-none">
-                    <input type="text" id="prodPrice" oninput="runProd()" placeholder="Price (e.g. 29.99)" class="w-full p-3 bg-slate-50 border rounded-xl outline-none">
-                    <input type="text" id="prodCurrency" oninput="runProd()" placeholder="Currency (e.g. USD)" value="USD" class="w-full p-3 bg-slate-50 border rounded-xl outline-none">
-                    <select id="prodAvail" onchange="runProd()" class="w-full p-3 bg-slate-50 border rounded-xl outline-none">
+            <section id="schema-product" class="tool-section space-y-8">
+                <div class="bg-white rounded-[2rem] p-8 shadow-premium border border-slate-200/60 space-y-4">
+                    <h1 class="text-2xl font-black mb-6 text-emerald-600">Product Schema</h1>
+                    <input type="text" id="prodName" oninput="update()" placeholder="Product Name" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                    <div class="grid grid-cols-2 gap-4">
+                        <input type="text" id="prodPrice" oninput="update()" placeholder="Price (e.g. 29.99)" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                        <input type="text" id="prodCurrency" oninput="update()" value="USD" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                    </div>
+                    <select id="prodAvail" onchange="update()" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
                         <option value="InStock">In Stock</option>
                         <option value="OutOfStock">Out of Stock</option>
                     </select>
                 </div>
             </section>
 
-            <section id="schema-howto" class="tool-section">
-                <div class="bg-white rounded-3xl p-8 shadow-premium border border-slate-200/60">
-                    <h1 class="text-2xl font-black mb-6 text-orange-500">How-To Schema Generator</h1>
-                    <input type="text" id="htName" oninput="runHowTo()" placeholder="How to..." class="w-full p-3 bg-slate-50 border rounded-xl outline-none mb-4">
+            <section id="schema-howto" class="tool-section space-y-8">
+                <div class="bg-white rounded-[2rem] p-8 shadow-premium border border-slate-200/60">
+                    <h1 class="text-2xl font-black mb-6 text-orange-500">How-To Schema</h1>
+                    <input type="text" id="htName" oninput="update()" placeholder="Task Name (e.g. How to tie a tie)" class="w-full p-4 bg-slate-50 border rounded-xl outline-none mb-6">
                     <div id="ht-rows" class="space-y-4"></div>
-                    <button onclick="addItem('howto')" class="w-full mt-4 py-3 border-2 border-dashed border-slate-200 rounded-xl text-slate-400 font-bold hover:text-orange-500 transition">+ Add Step</button>
+                    <button onclick="addItem('howto')" class="w-full mt-6 py-4 border-2 border-dashed border-slate-200 rounded-2xl text-slate-400 font-bold hover:text-orange-500 transition">+ Add Step</button>
                 </div>
             </section>
 
-            <section id="slug-opt" class="tool-section">
-                <div class="bg-white rounded-3xl p-8 shadow-premium border border-slate-200/60">
-                    <h1 class="text-2xl font-black mb-6">Slug Optimizer</h1>
-                    <input type="text" id="slugIn" oninput="runSlug()" placeholder="Enter page title..." class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+            <section id="schema-local" class="tool-section space-y-8">
+                <div class="bg-white rounded-[2rem] p-8 shadow-premium border border-slate-200/60 space-y-4">
+                    <h1 class="text-2xl font-black mb-6 text-blue-600">Local Business Schema</h1>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input type="text" id="locName" oninput="update()" placeholder="Business Name" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                        <select id="locType" onchange="update()" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                            <option value="LocalBusiness">General Business</option>
+                            <option value="Restaurant">Restaurant</option>
+                            <option value="LegalService">Legal Service</option>
+                            <option value="RealEstateAgent">Real Estate</option>
+                        </select>
+                    </div>
+                    <input type="text" id="locAddr" oninput="update()" placeholder="Street Address" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                    <div class="grid grid-cols-2 gap-4">
+                        <input type="text" id="locCity" oninput="update()" placeholder="City" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                        <input type="text" id="locZip" oninput="update()" placeholder="Zip Code" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                    </div>
+                    <input type="text" id="locPhone" oninput="update()" placeholder="Phone Number" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
                 </div>
             </section>
 
-            <section id="list-clean" class="tool-section">
-                <div class="bg-white rounded-3xl p-8 shadow-premium border border-slate-200/60">
-                    <h1 class="text-2xl font-black mb-6">List Cleaner</h1>
-                    <textarea id="listIn" oninput="runList()" class="w-full h-64 p-4 bg-slate-50 border rounded-xl outline-none font-mono text-sm" placeholder="Paste list..."></textarea>
+            <section id="slug-opt" class="tool-section space-y-8">
+                <div class="bg-white rounded-[2rem] p-8 shadow-premium border border-slate-200/60">
+                    <h1 class="text-3xl font-black text-slate-900 mb-2">Slug Optimizer</h1>
+                    <p class="text-slate-500 mb-8">Create clean, SEO-friendly URLs.</p>
+                    <input type="text" id="slugIn" oninput="update()" class="w-full p-6 bg-slate-50 border rounded-2xl outline-none focus:border-brand-600 font-semibold" placeholder="Enter Page Title...">
+                </div>
+            </section>
+
+            <section id="list-clean" class="tool-section space-y-8">
+                <div class="bg-white rounded-[2rem] p-8 shadow-premium border border-slate-200/60">
+                    <h1 class="text-3xl font-black text-slate-900 mb-2">List Cleaner</h1>
+                    <p class="text-slate-500 mb-8">Format messy lists instantly.</p>
+                    <textarea id="listIn" oninput="update()" class="w-full h-64 p-6 bg-slate-50 border rounded-2xl outline-none font-mono text-sm" placeholder="Paste list items here..."></textarea>
+                </div>
+            </section>
+
+            <section id="privacy-policy" class="tool-section space-y-8">
+                <div class="bg-white rounded-[2rem] p-10 shadow-premium border border-slate-200/60 prose prose-slate">
+                    <h1 class="text-3xl font-black text-slate-900 mb-6">Privacy Policy</h1>
+                    <p class="text-sm text-slate-600">SEO_FORGE is a privacy-first, client-side utility. All data processing occurs locally in your browser. We do not store, collect, or transmit your inputs.</p>
+                    <h3 class="text-lg font-bold mt-4">Ads & Cookies</h3>
+                    <p class="text-sm text-slate-600">We use third-party advertising (Google AdSense) and analytics. These services may use cookies to personalize content and ads.</p>
+                    <button onclick="showTool('schema-faq', document.querySelector('.nav-link'))" class="mt-8 bg-brand-900 text-white px-6 py-2 rounded-xl text-sm font-bold">Back to Tools</button>
                 </div>
             </section>
         </div>
 
         <aside class="lg:col-span-5 space-y-6">
-            <div class="bg-brand-900 rounded-[2rem] p-8 shadow-2xl sticky top-28">
-                <div class="flex justify-between items-center mb-4">
-                    <span class="text-brand-600 font-black text-xs uppercase tracking-widest">JSON-LD Output</span>
-                    <div class="flex gap-2">
-                        <button onclick="copyOut()" class="bg-brand-600 text-white px-3 py-1 rounded text-[10px] font-bold">Copy</button>
-                        <a href="https://search.google.com/test/rich-results" target="_blank" class="bg-slate-700 text-white px-3 py-1 rounded text-[10px] font-bold hover:bg-slate-600">Test on Google</a>
+            <div class="bg-brand-900 rounded-[2.5rem] p-8 shadow-2xl sticky top-28 overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-32 h-32 bg-brand-600 opacity-20 blur-3xl"></div>
+                <div class="relative z-10">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-brand-600 font-black text-[10px] uppercase tracking-widest">Live Output</span>
+                        <div class="flex gap-2">
+                            <button onclick="copyOut()" class="bg-brand-600 text-white px-4 py-1.5 rounded-lg text-xs font-bold hover:bg-brand-500 transition">Copy</button>
+                            <a id="testLink" href="https://search.google.com/test/rich-results" target="_blank" class="bg-slate-700 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold hover:bg-slate-600 transition">Test on Google</a>
+                        </div>
                     </div>
+                    <textarea id="out" readonly class="code-preview w-full h-[350px] bg-transparent text-emerald-400 font-mono text-[11px] p-2 outline-none resize-none leading-relaxed"></textarea>
+                    <button onclick="window.location.reload()" class="w-full mt-4 text-slate-500 text-[10px] font-bold uppercase tracking-widest hover:text-white transition">Clear & Reset</button>
                 </div>
-                <textarea id="out" readonly class="w-full h-[400px] bg-transparent text-emerald-400 font-mono text-[10px] p-2 outline-none resize-none"></textarea>
             </div>
-            <div class="p-6 bg-white rounded-3xl border border-dashed border-slate-200 text-center text-slate-300 text-xs italic">AdSense Display Unit</div>
+            
+            <div class="bg-white p-6 rounded-[2rem] border border-dashed border-slate-200 text-center shadow-premium">
+                <span class="text-[10px] font-black text-slate-300 uppercase tracking-widest block mb-4">Advertisement</span>
+                <div class="aspect-[4/3] bg-slate-50 rounded-2xl flex items-center justify-center text-slate-300 italic text-sm">AdSense Display Unit</div>
+            </div>
         </aside>
     </main>
-    <footer class="max-w-7xl mx-auto px-6 py-10 border-t border-slate-200 mt-12">
-    <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-bold text-slate-400 uppercase tracking-widest">
-        <div>© 2026 SEO_FORGE - Privacy First SEO Tools</div>
-        <div class="flex gap-6">
-            <button onclick="showTool('privacy-policy', this)" class="nav-link hover:text-brand-600">Privacy Policy</button>
-            <a href="mailto:andrewan@hotmail.com" class="hover:text-brand-600">Contact Support</a>
-        </div>
-    </div>
-</footer>
 
-<section id="privacy-policy" class="tool-section">
-    <div class="max-w-3xl mx-auto bg-white rounded-3xl p-10 shadow-premium border border-slate-200">
-        <h2 class="text-3xl font-black text-slate-900 mb-6">Privacy Policy</h2>
-        <div class="prose prose-slate text-sm text-slate-600 space-y-4">
-            <p><strong>Last Updated: April 2026</strong></p>
-            <p>At SEO_FORGE, we take your privacy seriously. This policy outlines how we handle data on our static utility site.</p>
-            
-            <h3 class="font-bold text-slate-900 uppercase tracking-tight">1. No Server-Side Storage</h3>
-            <p>SEO_FORGE is a <strong>client-side application</strong>. This means all processing—whether you are generating Schema, optimizing slugs, or cleaning lists—happens entirely within your own web browser. We do not transmit, save, or store your input data on our servers.</p>
-            
-            <h3 class="font-bold text-slate-900 uppercase tracking-tight">2. Advertising & Cookies</h3>
-            <p>We use third-party advertising companies (such as Google AdSense) to serve ads when you visit our website. These companies may use cookies to provide advertisements about goods and services of interest to you. You can opt out of personalized advertising by visiting your browser's ad settings.</p>
-            
-            <h3 class="font-bold text-slate-900 uppercase tracking-tight">3. Log Files</h3>
-            <p>Like most websites, we use standard analytics (like Google Analytics) to see how many people use our tools. This includes IP addresses, browser type, and time spent on page. This data is not linked to any personally identifiable information.</p>
+    <footer class="max-w-7xl mx-auto px-6 py-10 border-t border-slate-200 mt-12 w-full">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
+            <div>© 2026 SEO_FORGE - No Server Storage</div>
+            <div class="flex gap-8">
+                <button onclick="showTool('privacy-policy', this)" class="hover:text-brand-600 transition">Privacy Policy</button>
+                <a href="mailto:andrewan@hotmail.com" class="hover:text-brand-600 transition">Contact</a>
+            </div>
         </div>
-        <button onclick="showTool('schema-faq', document.querySelector('.nav-link'))" class="mt-8 bg-brand-900 text-white px-6 py-3 rounded-xl font-bold text-sm">Back to Tools</button>
-    </div>
-</section>
+    </footer>
 
     <script>
-        let faqs = [{q:"What is SEO Forge?", a:"A high-speed SEO toolkit."}];
-        let howtos = [{s:"Start by entering your first step."}];
+        let faqs = [{ q: "What is SEO Forge?", a: "A high-speed SEO toolkit." }];
+        let steps = [{ s: "First, paste your content." }];
 
-        function showTool(id, btn) {
+        function showTool(toolId, btn) {
             document.querySelectorAll('.tool-section').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('text-brand-600','border-b-2','border-brand-600'));
-            btn.classList.add('text-brand-600','border-b-2','border-brand-600');
+            document.getElementById(toolId).classList.add('active');
+            
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('text-brand-600', 'border-b-2', 'border-brand-600'));
+            if(btn && btn.classList.contains('nav-link')) {
+                btn.classList.add('text-brand-600', 'border-b-2', 'border-brand-600');
+            }
+
+            if (typeof gtag === 'function') {
+                gtag('event', 'tool_view', { 'tool_name': toolId });
+            }
             update();
         }
 
         function addItem(type) {
             if(type==='faq') faqs.push({q:"",a:""});
-            else howtos.push({s:""});
-            render();
+            else steps.push({s:""});
+            renderRows();
         }
 
-        function updateField(type, i, k, v) {
+        function updateF(type, i, k, v) {
             if(type==='faq') faqs[i][k] = v;
-            else howtos[i].s = v;
+            else steps[i].s = v;
             update();
         }
 
-        function render() {
-            document.getElementById('faq-rows').innerHTML = faqs.map((f,i)=>`<div class="space-y-2 p-3 bg-slate-50 rounded-xl border"><input oninput="updateField('faq',${i},'q',this.value)" value="${f.q}" class="w-full p-2 text-xs font-bold" placeholder="Question"><textarea oninput="updateField('faq',${i},'a',this.value)" class="w-full p-2 text-xs border rounded" placeholder="Answer">${f.a}</textarea></div>`).join('');
-            document.getElementById('ht-rows').innerHTML = howtos.map((h,i)=>`<div class="flex gap-2"><span class="font-bold text-slate-300">${i+1}.</span><input oninput="updateField('ht',${i},'s',this.value)" value="${h.s}" class="w-full p-2 text-xs border rounded-lg" placeholder="Step description"></div>`).join('');
+        function renderRows() {
+            document.getElementById('faq-rows').innerHTML = faqs.map((f,i)=>`
+                <div class="p-4 bg-slate-50 rounded-xl border space-y-2">
+                    <input oninput="updateF('faq',${i},'q',this.value)" value="${f.q}" class="w-full p-2 text-xs font-bold border rounded" placeholder="Question">
+                    <textarea oninput="updateF('faq',${i},'a',this.value)" class="w-full p-2 text-xs border rounded" placeholder="Answer">${f.a}</textarea>
+                </div>`).join('');
+            
+            document.getElementById('ht-rows').innerHTML = steps.map((s,i)=>`
+                <div class="flex gap-3">
+                    <span class="text-slate-300 font-bold">${i+1}</span>
+                    <input oninput="updateF('ht',${i},'s',this.value)" value="${s.s}" class="w-full p-2 text-xs border rounded" placeholder="How-to step...">
+                </div>`).join('');
             update();
         }
 
         function update() {
             const active = document.querySelector('.tool-section.active').id;
             let res = "";
-            if(active==='schema-faq') res = JSON.stringify({"@context":"https://schema.org","@type":"FAQPage","mainEntity":faqs.map(f=>({"@type":"Question","name":f.q,"acceptedAnswer":{"@type":"Answer","text":f.a}}))},null,2);
-            else if(active==='schema-product') res = JSON.stringify({"@context":"https://schema.org","@type":"Product","name":document.getElementById('prodName').value,"offers":{"@type":"Offer","price":document.getElementById('prodPrice').value,"priceCurrency":document.getElementById('prodCurrency').value,"availability":"https://schema.org/"+document.getElementById('prodAvail').value}},null,2);
-            else if(active==='schema-howto') res = JSON.stringify({"@context":"https://schema.org","@type":"HowTo","name":document.getElementById('htName').value,"step":howtos.map(h=>({"@type":"HowToStep","text":h.s}))},null,2);
-            else if(active==='slug-opt') { const sw = /\b(a|an|the|and|or|but|is|at|by|for|with|in|on|to)\b/gi; res = document.getElementById('slugIn').value.toLowerCase().replace(sw,'').replace(/[^\w\s-]/g,'').trim().replace(/\s+/g,'-').replace(/-+/g,'-'); }
-            else if(active==='list-clean') res = [...new Set(document.getElementById('listIn').value.split('\n').map(i=>i.trim()).filter(i=>i!==""))].sort().join('\n');
+            const testLink = document.getElementById('testLink');
+            testLink.style.display = active.includes('schema') ? "block" : "none";
+
+            if(active==='schema-faq') {
+                res = JSON.stringify({"@context":"https://schema.org","@type":"FAQPage","mainEntity":faqs.filter(f=>f.q&&f.a).map(f=>({"@type":"Question","name":f.q,"acceptedAnswer":{"@type":"Answer","text":f.a}}))},null,2);
+            } else if(active==='schema-product') {
+                res = JSON.stringify({"@context":"https://schema.org","@type":"Product","name":document.getElementById('prodName').value,"offers":{"@type":"Offer","price":document.getElementById('prodPrice').value,"priceCurrency":document.getElementById('prodCurrency').value,"availability":"https://schema.org/"+document.getElementById('prodAvail').value}},null,2);
+            } else if(active==='schema-howto') {
+                res = JSON.stringify({"@context":"https://schema.org","@type":"HowTo","name":document.getElementById('htName').value,"step":steps.filter(s=>s.s).map(s=>({"@type":"HowToStep","text":s.s}))},null,2);
+            } else if(active==='schema-local') {
+                res = JSON.stringify({"@context":"https://schema.org","@type":document.getElementById('locType').value,"name":document.getElementById('locName').value,"address":{"@type":"PostalAddress","streetAddress":document.getElementById('locAddr').value,"addressLocality":document.getElementById('locCity').value,"postalCode":document.getElementById('locZip').value,"addressCountry":"US"},"telephone":document.getElementById('locPhone').value},null,2);
+            } else if(active==='slug-opt') {
+                const sw = /\b(a|an|the|and|or|but|is|at|by|for|with|in|on|to)\b/gi;
+                res = document.getElementById('slugIn').value.toLowerCase().replace(sw,'').replace(/[^\w\s-]/g,'').trim().replace(/\s+/g,'-').replace(/-+/g,'-');
+            } else if(active==='list-clean') {
+                res = [...new Set(document.getElementById('listIn').value.split('\n').map(l=>l.trim()).filter(l=>l!==""))].sort().join('\n');
+            }
             document.getElementById('out').value = res;
         }
 
-        function runProd() { update(); }
-        function runHowTo() { update(); }
-        function runSlug() { update(); }
-        function runList() { update(); }
-        async function copyOut() { await navigator.clipboard.writeText(document.getElementById('out').value); alert('Copied!'); }
+        async function copyOut() {
+            await navigator.clipboard.writeText(document.getElementById('out').value);
+            alert('Copied to clipboard!');
+        }
 
-        render();
+        renderRows();
     </script>
 </body>
 </html>
