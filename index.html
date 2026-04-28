@@ -3,124 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SEO_FORGE | Professional SEO Tool Suite</title>
+    <title>SEO_FORGE | Professional SEO & Marketing Tool Suite</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { brand: { 50: '#f8fafc', 600: '#f27405', 700: '#d96a04', 900: '#0f172a' } },
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #fcfdfe; }
-        .glass-card { background: white; border: 1px solid #f1f5f9; box-shadow: 0 10px 30px -5px rgba(0,0,0,0.05); border-radius: 20px; }
+        .tool-panel { display: none; }
+        .tool-panel.active { display: block; animation: slideUp 0.3s ease-out; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .nav-active { color: #f27405; border-bottom: 2px solid #f27405; }
     </style>
 </head>
-<body>
+<body class="bg-[#fcfdfe] text-slate-900">
 
     <nav class="flex items-center justify-between px-10 py-6 bg-white border-b sticky top-0 z-50">
         <div class="flex items-center gap-2">
-            <div class="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center text-white font-bold">SF</div>
-            <span class="text-xl font-extrabold text-slate-900">SEO_FORGE</span>
+            <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center text-white font-bold italic shadow-lg">SF</div>
+            <span class="text-xl font-extrabold tracking-tighter">SEO_FORGE</span>
         </div>
-        <div class="hidden md:flex gap-8 text-sm font-bold text-slate-500 uppercase tracking-widest">
-            <button onclick="switchTool('schema')">Schema</button>
-            <button onclick="switchTool('roi')">ROI Calc</button>
-            <button onclick="switchTool('meta')">Meta Gen</button>
+        <div class="hidden md:flex gap-8 text-xs font-bold uppercase tracking-widest text-slate-400">
+            <button onclick="activate('schema', this)" class="nav-item nav-active pb-1">Schema</button>
+            <button onclick="activate('roi', this)" class="nav-item pb-1">ROI Calc</button>
+            <button onclick="activate('meta', this)" class="nav-item pb-1">Meta Tags</button>
+            <button onclick="activate('utm', this)" class="nav-item pb-1">UTM Builder</button>
         </div>
-        <button class="bg-orange-500 text-white px-6 py-2 rounded-xl font-bold text-sm shadow-lg shadow-orange-100">Contact</button>
+        <button class="bg-brand-600 text-white px-6 py-2 rounded-xl text-sm font-bold hover:bg-brand-700 transition shadow-lg shadow-orange-100">Pro Access</button>
     </nav>
 
-    <section class="text-center py-20 bg-gradient-to-b from-blue-50/50 to-transparent">
-        <h1 class="text-5xl font-extrabold text-slate-900 mb-4">Professional <span class="text-orange-500">SEO Tools</span></h1>
-        <p class="text-slate-500 max-w-2xl mx-auto text-lg mb-10">Instant, browser-side utilities for modern digital marketers. No data collection, no login, just results.</p>
-    </section>
+    <header class="text-center py-20 bg-gradient-to-b from-blue-50/40 to-white px-4">
+        <h1 class="text-5xl font-extrabold mb-4 tracking-tight">Free <span class="text-brand-600">SEO Automation</span> Tools</h1>
+        <p class="max-w-2xl mx-auto text-slate-500 text-lg mb-10">Instantly generate code and audits in your browser. Privacy-focused, zero data-tracking, professional results.</p>
+    </header>
 
-    <main class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 mb-20">
+    <main class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 pb-24">
         
-        <div id="input-container" class="glass-card p-8">
-            <div id="roi-tool" class="tool-view hidden">
-                <h2 class="text-2xl font-bold mb-6">Ads ROI Calculator</h2>
-                <div class="space-y-4">
-                    <label class="block text-xs font-bold text-slate-400 uppercase">Monthly Budget ($)</label>
-                    <input type="number" id="roiBudget" oninput="calcROI()" class="w-full p-4 bg-slate-50 border rounded-xl" value="1000">
-                    <label class="block text-xs font-bold text-slate-400 uppercase">Expected Conversion Rate (%)</label>
-                    <input type="number" id="roiConv" oninput="calcROI()" class="w-full p-4 bg-slate-50 border rounded-xl" value="2.5">
-                    <label class="block text-xs font-bold text-slate-400 uppercase">Avg. Sale Value ($)</label>
-                    <input type="number" id="roiSale" oninput="calcROI()" class="w-full p-4 bg-slate-50 border rounded-xl" value="100">
+        <div class="bg-white rounded-3xl p-8 shadow-xl border border-slate-100">
+            
+            <div id="schema" class="tool-panel active space-y-4">
+                <h2 class="text-2xl font-black mb-4">Organization Schema</h2>
+                <input type="text" id="s-name" oninput="run()" placeholder="Business Name" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                <input type="text" id="s-url" oninput="run()" placeholder="Website URL" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                <input type="text" id="s-logo" oninput="run()" placeholder="Logo Image URL" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+            </div>
+
+            <div id="roi" class="tool-panel space-y-4">
+                <h2 class="text-2xl font-black mb-4 text-blue-600 font-bold">Marketing ROI Calculator</h2>
+                <label class="text-[10px] font-bold text-slate-400 uppercase">Total Ad Spend ($)</label>
+                <input type="number" id="r-spend" oninput="run()" value="1000" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                <label class="text-[10px] font-bold text-slate-400 uppercase">Avg. Sale Price ($)</label>
+                <input type="number" id="r-sale" oninput="run()" value="150" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                <label class="text-[10px] font-bold text-slate-400 uppercase">Number of Conversions</label>
+                <input type="number" id="r-conv" oninput="run()" value="20" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+            </div>
+
+            <div id="meta" class="tool-panel space-y-4">
+                <h2 class="text-2xl font-black mb-4 text-emerald-600 font-bold">Meta Tag Generator</h2>
+                <input type="text" id="m-title" oninput="run()" placeholder="Page Title" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                <textarea id="m-desc" oninput="run()" placeholder="Meta Description" class="w-full h-32 p-4 bg-slate-50 border rounded-xl outline-none"></textarea>
+            </div>
+
+            <div id="utm" class="tool-panel space-y-4">
+                <h2 class="text-2xl font-black mb-4 text-purple-600 font-bold">UTM Link Builder</h2>
+                <input type="text" id="u-url" oninput="run()" placeholder="Target URL" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" id="u-src" oninput="run()" placeholder="Source (e.g. google)" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                    <input type="text" id="u-med" oninput="run()" placeholder="Medium (e.g. email)" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
                 </div>
             </div>
 
-            <div id="schema-tool" class="tool-view active">
-                <h2 class="text-2xl font-bold mb-6">Organization Schema</h2>
-                <input type="text" id="bizName" oninput="update()" placeholder="Business Name" class="w-full p-4 bg-slate-50 border rounded-xl mb-4">
-                <input type="text" id="bizUrl" oninput="update()" placeholder="Website URL" class="w-full p-4 bg-slate-50 border rounded-xl">
-            </div>
         </div>
 
-        <div class="glass-card bg-slate-900 p-8 text-white">
-            <div class="flex justify-between items-center mb-6">
-                <span class="text-xs font-black text-orange-500 uppercase tracking-widest">Live Result</span>
-                <button onclick="copyCode()" class="bg-white/10 px-4 py-1 rounded text-xs font-bold hover:bg-white/20 transition">Copy</button>
+        <div class="bg-slate-900 rounded-3xl p-8 shadow-2xl relative overflow-hidden flex flex-col h-[500px]">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-brand-600 opacity-10 blur-3xl"></div>
+            <div class="flex justify-between items-center mb-6 relative z-10">
+                <span id="label" class="text-brand-600 font-black text-[10px] uppercase tracking-widest italic">JSON-LD Output</span>
+                <button onclick="copyOut()" class="bg-brand-600 text-white px-5 py-2 rounded-xl text-xs font-bold hover:bg-brand-700 transition">Copy Result</button>
             </div>
-            <textarea id="output" readonly class="w-full h-80 bg-transparent text-emerald-400 font-mono text-xs outline-none resize-none leading-relaxed"></textarea>
+            <textarea id="out" readonly class="flex-1 bg-transparent text-emerald-400 font-mono text-xs p-2 outline-none resize-none leading-relaxed custom-scrollbar"></textarea>
         </div>
     </main>
 
-    <section class="max-w-7xl mx-auto px-6 py-20 border-t">
-        <h3 class="text-2xl font-bold text-center mb-12">More Free Tools</h3>
+    <section class="max-w-7xl mx-auto px-6 py-24 border-t border-slate-100">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-slate-900">Explore Our Free Utilities</h2>
+            <p class="text-slate-400">Lightweight browser tools for professional marketers.</p>
+        </div>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div class="p-8 bg-white border rounded-2xl text-center hover:shadow-xl transition cursor-pointer" onclick="switchTool('meta')">
-                <div class="text-orange-500 font-bold mb-2">Meta</div>
-                <div class="font-bold">Tag Generator</div>
+            <div class="p-8 bg-white border border-slate-100 rounded-2xl text-center hover:shadow-2xl transition cursor-pointer" onclick="activate('roi')">
+                <div class="text-blue-500 font-bold mb-2">ROI</div>
+                <div class="font-extrabold text-slate-900">Calculators</div>
             </div>
-            <div class="p-8 bg-white border rounded-2xl text-center hover:shadow-xl transition">
-                <div class="text-blue-500 font-bold mb-2">UTM</div>
-                <div class="font-bold">Link Builder</div>
+            <div class="p-8 bg-white border border-slate-100 rounded-2xl text-center hover:shadow-2xl transition cursor-pointer" onclick="activate('utm')">
+                <div class="text-purple-500 font-bold mb-2">UTM</div>
+                <div class="font-extrabold text-slate-900">Link Builders</div>
             </div>
-            <div class="p-8 bg-white border rounded-2xl text-center hover:shadow-xl transition">
-                <div class="text-emerald-500 font-bold mb-2">QR</div>
-                <div class="font-bold">Code Generator</div>
+            <div class="p-8 bg-white border border-slate-100 rounded-2xl text-center shadow-sm opacity-50 grayscale">
+                <div class="text-slate-400 font-bold mb-2 italic">QR Code</div>
+                <div class="font-extrabold text-slate-400 uppercase text-[10px]">Coming Soon</div>
             </div>
-            <div class="p-8 bg-white border rounded-2xl text-center hover:shadow-xl transition">
-                <div class="text-purple-500 font-bold mb-2">Robots</div>
-                <div class="font-bold">TXT Generator</div>
+            <div class="p-8 bg-white border border-slate-100 rounded-2xl text-center shadow-sm opacity-50 grayscale">
+                <div class="text-slate-400 font-bold mb-2 italic">Robots.txt</div>
+                <div class="font-extrabold text-slate-400 uppercase text-[10px]">Coming Soon</div>
             </div>
         </div>
     </section>
 
+    <footer class="bg-slate-900 text-white pt-24 pb-12 px-10">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 border-b border-slate-800 pb-20">
+            <div><h4 class="text-2xl font-black mb-6 italic">SEO_FORGE</h4><p class="text-slate-500 text-sm">Professional browser-side tools for the privacy-first web.</p></div>
+            <div><h5 class="font-bold mb-6">Tools</h5><ul class="text-slate-500 text-sm space-y-3"><li>Schema Gen</li><li>ROI Calc</li><li>Meta Gen</li></ul></div>
+            <div><h5 class="font-bold mb-6">Company</h5><ul class="text-slate-500 text-sm space-y-3"><li>Privacy Policy</li><li>About</li><li>Contact</li></ul></div>
+            <div><h5 class="font-bold mb-6">Ad Placement</h5><div class="bg-slate-800 h-32 rounded-xl flex items-center justify-center italic text-xs text-slate-600">Premium Ad Slot</div></div>
+        </div>
+        <p class="text-center pt-8 text-[10px] text-slate-600 uppercase tracking-widest font-black">© 2026 SEO_FORGE - NO DATA STORED ON SERVER</p>
+    </footer>
+
     <script>
-        function switchTool(type) {
-            document.querySelectorAll('.tool-view').forEach(v => v.classList.add('hidden'));
-            document.getElementById(type + '-tool').classList.remove('hidden');
-            document.getElementById(type + '-tool').classList.add('active');
-            update();
+        function activate(id, btn) {
+            document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('nav-active'));
+            if(btn) btn.classList.add('nav-active');
+            
+            const label = document.getElementById('label');
+            if(id === 'roi') label.innerText = "Calculated ROI Report";
+            else if(id === 'meta') label.innerText = "HTML Meta Snippet";
+            else if(id === 'utm') label.innerText = "Final UTM Link";
+            else label.innerText = "JSON-LD Output";
+            run();
         }
 
-        function update() {
-            const active = document.querySelector('.tool-view.active').id;
-            let res = "";
-            if(active === 'roi-tool') calcROI();
-            else if(active === 'schema-tool') {
-                res = JSON.stringify({"@context":"https://schema.org","@type":"Organization","name":document.getElementById('bizName').value,"url":document.getElementById('bizUrl').value},null,4);
-                document.getElementById('output').value = res;
+        function run() {
+            const active = document.querySelector('.tool-panel.active').id;
+            const out = document.getElementById('out');
+            
+            if(active === 'schema') {
+                const json = {"@context":"https://schema.org","@type":"Organization","name":document.getElementById('s-name').value,"url":document.getElementById('s-url').value,"logo":document.getElementById('s-logo').value};
+                out.value = JSON.stringify(json, null, 4);
+            } 
+            else if(active === 'roi') {
+                const spend = parseFloat(document.getElementById('r-spend').value);
+                const sale = parseFloat(document.getElementById('r-sale').value);
+                const conv = parseFloat(document.getElementById('r-conv').value);
+                const rev = sale * conv;
+                const roi = ((rev - spend) / spend) * 100;
+                out.value = `ROI AUDIT:\n\nTotal Spend: $${spend}\nTotal Revenue: $${rev}\nNet Profit: $${rev - spend}\n\nROI: ${roi.toFixed(2)}%`;
+            }
+            else if(active === 'meta') {
+                const title = document.getElementById('m-title').value;
+                const desc = document.getElementById('m-desc').value;
+                out.value = `<title>${title}</title>\n<meta name="description" content="${desc}">`;
+            }
+            else if(active === 'utm') {
+                const url = document.getElementById('u-url').value;
+                const src = document.getElementById('u-src').value;
+                const med = document.getElementById('u-med').value;
+                out.value = `${url}?utm_source=${src}&utm_medium=${med}&utm_campaign=seo_forge`;
             }
         }
 
-        function calcROI() {
-            const budget = document.getElementById('roiBudget').value;
-            const conv = document.getElementById('roiConv').value / 100;
-            const sale = document.getElementById('roiSale').value;
-            const cpc = 1.50; // Assume average CPC
-            const clicks = budget / cpc;
-            const conversions = clicks * conv;
-            const revenue = conversions * sale;
-            const profit = revenue - budget;
-            
-            document.getElementById('output').value = `ESTIMATED MONTHLY RESULTS:\n\nClicks: ${Math.round(clicks)}\nConversions: ${Math.round(conversions)}\nGross Revenue: $${revenue.toFixed(2)}\nNet Profit: $${profit.toFixed(2)}\n\nROI: ${((profit/budget)*100).toFixed(2)}%`;
+        async function copyOut() {
+            await navigator.clipboard.writeText(document.getElementById('out').value);
+            alert('Copied to Clipboard!');
         }
-
-        async function copyCode() {
-            await navigator.clipboard.writeText(document.getElementById('output').value);
-            alert('Copied!');
-        }
-
-        update();
+        run();
     </script>
 </body>
 </html>
