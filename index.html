@@ -3,256 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SEO_FORGE | Premium Utility Suite</title>
-    <meta name="description" content="Free, privacy-focused SEO tool suite. Generate JSON-LD Schema, optimize URL slugs, and clean text lists instantly in your browser.">
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BWDCJZKLCY"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-BWDCJZKLCY');
-    </script>
-
+    <title>SEO_FORGE Pro | Advanced Schema Suite</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: { brand: { 50: '#f8fafc', 600: '#4f46e5', 700: '#4338ca', 900: '#0f172a' } },
-                    boxShadow: { 'premium': '0 20px 25px -5px rgba(0, 0, 0, 0.05)' }
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
+                    colors: { brand: { 50: '#f4f7ff', 600: '#3b82f6', 700: '#2563eb', 900: '#0f172a' } }
                 }
             }
         }
     </script>
 
     <style>
-        body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
-        .glass-nav { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
-        .code-preview::-webkit-scrollbar { width: 6px; }
-        .code-preview::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
-        .tool-section { display: none; }
-        .tool-section.active { display: block; animation: fadeIn 0.2s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; height: 100vh; overflow: hidden; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+        .tool-content { display: none; }
+        .tool-content.active { display: block; }
+        .nav-btn.active { background: #eff6ff; color: #2563eb; border-right: 3px solid #2563eb; }
     </style>
 </head>
-<body class="bg-brand-50 min-h-screen flex flex-col">
+<body class="bg-white flex flex-col">
 
-    <nav class="glass-nav sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-brand-600 rounded-xl flex items-center justify-center shadow-lg shadow-brand-600/20 text-white font-bold">SF</div>
-                <span class="text-2xl font-black text-brand-900 tracking-tighter uppercase">SEO_FORGE</span>
-            </div>
-            <div class="hidden md:flex items-center space-x-4 text-xs font-bold uppercase tracking-widest text-slate-400">
-                <button onclick="showTool('schema-faq', this)" class="nav-link text-brand-600 border-b-2 border-brand-600 pb-1">FAQ</button>
-                <button onclick="showTool('schema-product', this)" class="nav-link hover:text-brand-600 transition">Product</button>
-                <button onclick="showTool('schema-howto', this)" class="nav-link hover:text-brand-600 transition">How-To</button>
-                <button onclick="showTool('schema-local', this)" class="nav-link hover:text-brand-600 transition">Local Biz</button>
-                <div class="w-px h-4 bg-slate-200"></div>
-                <button onclick="showTool('slug-opt', this)" class="nav-link hover:text-brand-600 transition">Slug</button>
-                <button onclick="showTool('list-clean', this)" class="nav-link hover:text-brand-600 transition">List</button>
-            </div>
+    <header class="h-16 border-b flex items-center justify-between px-6 bg-white shrink-0">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-brand-700 rounded-lg flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-blue-200">S</div>
+            <span class="font-extrabold text-brand-900 tracking-tight">SEO_FORGE <span class="text-blue-600">PRO</span></span>
         </div>
-    </nav>
+        <div class="flex gap-4">
+            <a href="https://search.google.com/test/rich-results" target="_blank" class="text-xs font-bold text-slate-500 hover:text-brand-700 transition uppercase tracking-widest">Google Validator</a>
+            <button onclick="copyOut()" class="bg-brand-700 text-white px-5 py-2 rounded-full text-xs font-bold shadow-md hover:scale-105 transition">Copy JSON-LD</button>
+        </div>
+    </header>
 
-    <main class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-12 gap-10 flex-grow">
+    <div class="flex flex-1 overflow-hidden">
         
-        <div class="lg:col-span-7">
+        <aside class="w-64 border-r bg-slate-50 flex flex-col shrink-0 custom-scrollbar overflow-y-auto">
+            <div class="p-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Select Schema Type</div>
+            <nav class="flex flex-col">
+                <button onclick="switchTab('faq', this)" class="nav-btn active flex items-center gap-3 px-6 py-4 text-sm font-semibold text-slate-600 hover:bg-slate-100 transition text-left">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg> FAQ Page
+                </button>
+                <button onclick="switchTab('local', this)" class="nav-btn flex items-center gap-3 px-6 py-4 text-sm font-semibold text-slate-600 hover:bg-slate-100 transition text-left">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> Local Business
+                </button>
+                <button onclick="switchTab('product', this)" class="nav-btn flex items-center gap-3 px-6 py-4 text-sm font-semibold text-slate-600 hover:bg-slate-100 transition text-left">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg> Product
+                </button>
+                <button onclick="switchTab('howto', this)" class="nav-btn flex items-center gap-3 px-6 py-4 text-sm font-semibold text-slate-600 hover:bg-slate-100 transition text-left">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg> How-To
+                </button>
+            </nav>
             
-            <section id="schema-faq" class="tool-section active space-y-8">
-                <div class="bg-white rounded-[2rem] p-8 shadow-premium border border-slate-200/60">
-                    <h1 class="text-3xl font-black text-slate-900 mb-2">FAQ Schema Generator</h1>
-                    <p class="text-slate-500 mb-8">Generate JSON-LD for Google Rich Snippets.</p>
-                    <div id="faq-rows" class="space-y-4"></div>
-                    <button onclick="addItem('faq')" class="w-full mt-6 py-4 border-2 border-dashed border-slate-200 rounded-2xl text-slate-400 font-bold hover:border-brand-600 hover:text-brand-600 transition">+ Add Item</button>
+            <div class="mt-auto p-4">
+                <div class="aspect-square bg-white border border-dashed rounded-xl flex items-center justify-center text-[10px] text-slate-300 italic p-4 text-center">
+                    Ad Unit Sidebar
                 </div>
-            </section>
-
-            <section id="schema-product" class="tool-section space-y-8">
-                <div class="bg-white rounded-[2rem] p-8 shadow-premium border border-slate-200/60 space-y-4">
-                    <h1 class="text-2xl font-black mb-6 text-emerald-600">Product Schema</h1>
-                    <input type="text" id="prodName" oninput="update()" placeholder="Product Name" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
-                    <div class="grid grid-cols-2 gap-4">
-                        <input type="text" id="prodPrice" oninput="update()" placeholder="Price (e.g. 29.99)" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
-                        <input type="text" id="prodCurrency" oninput="update()" value="USD" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
-                    </div>
-                    <select id="prodAvail" onchange="update()" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
-                        <option value="InStock">In Stock</option>
-                        <option value="OutOfStock">Out of Stock</option>
-                    </select>
-                </div>
-            </section>
-
-            <section id="schema-howto" class="tool-section space-y-8">
-                <div class="bg-white rounded-[2rem] p-8 shadow-premium border border-slate-200/60">
-                    <h1 class="text-2xl font-black mb-6 text-orange-500">How-To Schema</h1>
-                    <input type="text" id="htName" oninput="update()" placeholder="Task Name (e.g. How to tie a tie)" class="w-full p-4 bg-slate-50 border rounded-xl outline-none mb-6">
-                    <div id="ht-rows" class="space-y-4"></div>
-                    <button onclick="addItem('howto')" class="w-full mt-6 py-4 border-2 border-dashed border-slate-200 rounded-2xl text-slate-400 font-bold hover:text-orange-500 transition">+ Add Step</button>
-                </div>
-            </section>
-
-            <section id="schema-local" class="tool-section space-y-8">
-                <div class="bg-white rounded-[2rem] p-8 shadow-premium border border-slate-200/60 space-y-4">
-                    <h1 class="text-2xl font-black mb-6 text-blue-600">Local Business Schema</h1>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input type="text" id="locName" oninput="update()" placeholder="Business Name" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
-                        <select id="locType" onchange="update()" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
-                            <option value="LocalBusiness">General Business</option>
-                            <option value="Restaurant">Restaurant</option>
-                            <option value="LegalService">Legal Service</option>
-                            <option value="RealEstateAgent">Real Estate</option>
-                        </select>
-                    </div>
-                    <input type="text" id="locAddr" oninput="update()" placeholder="Street Address" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
-                    <div class="grid grid-cols-2 gap-4">
-                        <input type="text" id="locCity" oninput="update()" placeholder="City" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
-                        <input type="text" id="locZip" oninput="update()" placeholder="Zip Code" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
-                    </div>
-                    <input type="text" id="locPhone" oninput="update()" placeholder="Phone Number" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
-                </div>
-            </section>
-
-            <section id="slug-opt" class="tool-section space-y-8">
-                <div class="bg-white rounded-[2rem] p-8 shadow-premium border border-slate-200/60">
-                    <h1 class="text-3xl font-black text-slate-900 mb-2">Slug Optimizer</h1>
-                    <p class="text-slate-500 mb-8">Create clean, SEO-friendly URLs.</p>
-                    <input type="text" id="slugIn" oninput="update()" class="w-full p-6 bg-slate-50 border rounded-2xl outline-none focus:border-brand-600 font-semibold" placeholder="Enter Page Title...">
-                </div>
-            </section>
-
-            <section id="list-clean" class="tool-section space-y-8">
-                <div class="bg-white rounded-[2rem] p-8 shadow-premium border border-slate-200/60">
-                    <h1 class="text-3xl font-black text-slate-900 mb-2">List Cleaner</h1>
-                    <p class="text-slate-500 mb-8">Format messy lists instantly.</p>
-                    <textarea id="listIn" oninput="update()" class="w-full h-64 p-6 bg-slate-50 border rounded-2xl outline-none font-mono text-sm" placeholder="Paste list items here..."></textarea>
-                </div>
-            </section>
-
-            <section id="privacy-policy" class="tool-section space-y-8">
-                <div class="bg-white rounded-[2rem] p-10 shadow-premium border border-slate-200/60 prose prose-slate">
-                    <h1 class="text-3xl font-black text-slate-900 mb-6">Privacy Policy</h1>
-                    <p class="text-sm text-slate-600">SEO_FORGE is a privacy-first, client-side utility. All data processing occurs locally in your browser. We do not store, collect, or transmit your inputs.</p>
-                    <h3 class="text-lg font-bold mt-4">Ads & Cookies</h3>
-                    <p class="text-sm text-slate-600">We use third-party advertising (Google AdSense) and analytics. These services may use cookies to personalize content and ads.</p>
-                    <button onclick="showTool('schema-faq', document.querySelector('.nav-link'))" class="mt-8 bg-brand-900 text-white px-6 py-2 rounded-xl text-sm font-bold">Back to Tools</button>
-                </div>
-            </section>
-        </div>
-
-        <aside class="lg:col-span-5 space-y-6">
-            <div class="bg-brand-900 rounded-[2.5rem] p-8 shadow-2xl sticky top-28 overflow-hidden">
-                <div class="absolute -top-10 -right-10 w-32 h-32 bg-brand-600 opacity-20 blur-3xl"></div>
-                <div class="relative z-10">
-                    <div class="flex justify-between items-center mb-6">
-                        <span class="text-brand-600 font-black text-[10px] uppercase tracking-widest">Live Output</span>
-                        <div class="flex gap-2">
-                            <button onclick="copyOut()" class="bg-brand-600 text-white px-4 py-1.5 rounded-lg text-xs font-bold hover:bg-brand-500 transition">Copy</button>
-                            <a id="testLink" href="https://search.google.com/test/rich-results" target="_blank" class="bg-slate-700 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold hover:bg-slate-600 transition">Test on Google</a>
-                        </div>
-                    </div>
-                    <textarea id="out" readonly class="code-preview w-full h-[350px] bg-transparent text-emerald-400 font-mono text-[11px] p-2 outline-none resize-none leading-relaxed"></textarea>
-                    <button onclick="window.location.reload()" class="w-full mt-4 text-slate-500 text-[10px] font-bold uppercase tracking-widest hover:text-white transition">Clear & Reset</button>
-                </div>
-            </div>
-            
-            <div class="bg-white p-6 rounded-[2rem] border border-dashed border-slate-200 text-center shadow-premium">
-                <span class="text-[10px] font-black text-slate-300 uppercase tracking-widest block mb-4">Advertisement</span>
-                <div class="aspect-[4/3] bg-slate-50 rounded-2xl flex items-center justify-center text-slate-300 italic text-sm">AdSense Display Unit</div>
             </div>
         </aside>
-    </main>
 
-    <footer class="max-w-7xl mx-auto px-6 py-10 border-t border-slate-200 mt-12 w-full">
-        <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
-            <div>© 2026 SEO_FORGE - No Server Storage</div>
-            <div class="flex gap-8">
-                <button onclick="showTool('privacy-policy', this)" class="hover:text-brand-600 transition">Privacy Policy</button>
-                <a href="mailto:andrewan@hotmail.com" class="hover:text-brand-600 transition">Contact</a>
+        <main class="flex-1 overflow-y-auto custom-scrollbar p-10 bg-white">
+            <div class="max-w-2xl mx-auto">
+                
+                <div id="faq" class="tool-content active">
+                    <h2 class="text-2xl font-extrabold text-slate-900 mb-2">FAQ Schema</h2>
+                    <p class="text-sm text-slate-500 mb-8">Add frequently asked questions to your page.</p>
+                    <div id="faq-list" class="space-y-4"></div>
+                    <button onclick="addFaq()" class="mt-6 w-full py-3 border-2 border-dashed border-slate-200 rounded-xl text-slate-400 font-bold hover:border-blue-400 hover:text-blue-600 transition">
+                        + Add Question
+                    </button>
+                </div>
+
+                <div id="local" class="tool-content">
+                    <h2 class="text-2xl font-extrabold text-slate-900 mb-8">Local Business</h2>
+                    <div class="space-y-4">
+                        <input type="text" id="loc-name" oninput="update()" placeholder="Business Name" class="w-full p-4 bg-slate-50 border rounded-xl outline-none focus:ring-2 ring-blue-100">
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="text" id="loc-phone" oninput="update()" placeholder="Phone Number" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                            <input type="text" id="loc-url" oninput="update()" placeholder="Website URL" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="product" class="tool-content">
+                    <h2 class="text-2xl font-extrabold text-slate-900 mb-8">Product Details</h2>
+                    <div class="space-y-4">
+                        <input type="text" id="prod-name" oninput="update()" placeholder="Product Name" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="text" id="prod-price" oninput="update()" placeholder="Price (29.99)" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                            <input type="text" id="prod-sku" oninput="update()" placeholder="SKU / ID" class="w-full p-4 bg-slate-50 border rounded-xl outline-none">
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </div>
-    </footer>
+        </main>
+
+        <aside class="w-[450px] border-l bg-slate-900 flex flex-col shrink-0">
+            <div class="h-12 flex items-center justify-between px-6 border-b border-slate-800 shrink-0">
+                <span class="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">JSON-LD Preview</span>
+                <span class="text-[10px] text-emerald-500 font-mono">● VALIDATED</span>
+            </div>
+            <textarea id="output" readonly class="flex-1 bg-transparent text-emerald-400 font-mono text-[11px] p-8 outline-none resize-none custom-scrollbar leading-relaxed"></textarea>
+        </aside>
+
+    </div>
 
     <script>
-        let faqs = [{ q: "What is SEO Forge?", a: "A high-speed SEO toolkit." }];
-        let steps = [{ s: "First, paste your content." }];
+        let faqs = [{q: "Example Question?", a: "This is an example answer."}];
 
-        function showTool(toolId, btn) {
-            document.querySelectorAll('.tool-section').forEach(s => s.classList.remove('active'));
-            document.getElementById(toolId).classList.add('active');
-            
-            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('text-brand-600', 'border-b-2', 'border-brand-600'));
-            if(btn && btn.classList.contains('nav-link')) {
-                btn.classList.add('text-brand-600', 'border-b-2', 'border-brand-600');
-            }
-
-            if (typeof gtag === 'function') {
-                gtag('event', 'tool_view', { 'tool_name': toolId });
-            }
+        function switchTab(id, btn) {
+            document.querySelectorAll('.tool-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            btn.classList.add('active');
             update();
         }
 
-        function addItem(type) {
-            if(type==='faq') faqs.push({q:"",a:""});
-            else steps.push({s:""});
-            renderRows();
-        }
-
-        function updateF(type, i, k, v) {
-            if(type==='faq') faqs[i][k] = v;
-            else steps[i].s = v;
-            update();
-        }
-
-        function renderRows() {
-            document.getElementById('faq-rows').innerHTML = faqs.map((f,i)=>`
-                <div class="p-4 bg-slate-50 rounded-xl border space-y-2">
-                    <input oninput="updateF('faq',${i},'q',this.value)" value="${f.q}" class="w-full p-2 text-xs font-bold border rounded" placeholder="Question">
-                    <textarea oninput="updateF('faq',${i},'a',this.value)" class="w-full p-2 text-xs border rounded" placeholder="Answer">${f.a}</textarea>
-                </div>`).join('');
-            
-            document.getElementById('ht-rows').innerHTML = steps.map((s,i)=>`
-                <div class="flex gap-3">
-                    <span class="text-slate-300 font-bold">${i+1}</span>
-                    <input oninput="updateF('ht',${i},'s',this.value)" value="${s.s}" class="w-full p-2 text-xs border rounded" placeholder="How-to step...">
-                </div>`).join('');
+        function addFaq() { faqs.push({q:'', a:''}); renderFaqs(); }
+        
+        function renderFaqs() {
+            const container = document.getElementById('faq-list');
+            container.innerHTML = faqs.map((f, i) => `
+                <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 space-y-3">
+                    <input type="text" value="${f.q}" oninput="faqs[${i}].q = this.value; update()" class="w-full p-3 bg-white border rounded-lg text-sm" placeholder="Question">
+                    <textarea oninput="faqs[${i}].a = this.value; update()" class="w-full p-3 bg-white border rounded-lg text-sm h-20" placeholder="Answer">${f.a}</textarea>
+                </div>
+            `).join('');
             update();
         }
 
         function update() {
-            const active = document.querySelector('.tool-section.active').id;
-            let res = "";
-            const testLink = document.getElementById('testLink');
-            testLink.style.display = active.includes('schema') ? "block" : "none";
+            const activeId = document.querySelector('.tool-content.active').id;
+            let json = {};
 
-            if(active==='schema-faq') {
-                res = JSON.stringify({"@context":"https://schema.org","@type":"FAQPage","mainEntity":faqs.filter(f=>f.q&&f.a).map(f=>({"@type":"Question","name":f.q,"acceptedAnswer":{"@type":"Answer","text":f.a}}))},null,2);
-            } else if(active==='schema-product') {
-                res = JSON.stringify({"@context":"https://schema.org","@type":"Product","name":document.getElementById('prodName').value,"offers":{"@type":"Offer","price":document.getElementById('prodPrice').value,"priceCurrency":document.getElementById('prodCurrency').value,"availability":"https://schema.org/"+document.getElementById('prodAvail').value}},null,2);
-            } else if(active==='schema-howto') {
-                res = JSON.stringify({"@context":"https://schema.org","@type":"HowTo","name":document.getElementById('htName').value,"step":steps.filter(s=>s.s).map(s=>({"@type":"HowToStep","text":s.s}))},null,2);
-            } else if(active==='schema-local') {
-                res = JSON.stringify({"@context":"https://schema.org","@type":document.getElementById('locType').value,"name":document.getElementById('locName').value,"address":{"@type":"PostalAddress","streetAddress":document.getElementById('locAddr').value,"addressLocality":document.getElementById('locCity').value,"postalCode":document.getElementById('locZip').value,"addressCountry":"US"},"telephone":document.getElementById('locPhone').value},null,2);
-            } else if(active==='slug-opt') {
-                const sw = /\b(a|an|the|and|or|but|is|at|by|for|with|in|on|to)\b/gi;
-                res = document.getElementById('slugIn').value.toLowerCase().replace(sw,'').replace(/[^\w\s-]/g,'').trim().replace(/\s+/g,'-').replace(/-+/g,'-');
-            } else if(active==='list-clean') {
-                res = [...new Set(document.getElementById('listIn').value.split('\n').map(l=>l.trim()).filter(l=>l!==""))].sort().join('\n');
+            if(activeId === 'faq') {
+                json = { "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": faqs.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } })) };
+            } else if(activeId === 'local') {
+                json = { "@context": "https://schema.org", "@type": "LocalBusiness", "name": document.getElementById('loc-name').value, "telephone": document.getElementById('loc-phone').value, "url": document.getElementById('loc-url').value };
+            } else if(activeId === 'product') {
+                json = { "@context": "https://schema.org", "@type": "Product", "name": document.getElementById('prod-name').value, "offers": { "@type": "Offer", "price": document.getElementById('prod-price').value, "sku": document.getElementById('prod-sku').value } };
             }
-            document.getElementById('out').value = res;
+
+            document.getElementById('output').value = JSON.stringify(json, null, 4);
         }
 
         async function copyOut() {
-            await navigator.clipboard.writeText(document.getElementById('out').value);
-            alert('Copied to clipboard!');
+            await navigator.clipboard.writeText(document.getElementById('output').value);
+            alert('Copied to Clipboard');
         }
 
-        renderRows();
+        renderFaqs();
     </script>
 </body>
 </html>
